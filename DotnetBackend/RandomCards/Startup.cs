@@ -27,7 +27,7 @@ namespace RandomCards
 
             services.AddDbContext<DatabaseContext>();
 
-            services.AddScoped<IInfo, Info>();
+            services.AddScoped<IDeckBuilding, DeckBuilding>();
             services.AddScoped<IPlayer, Player>();
             services.AddScoped<IGame, Game>();
             services.AddScoped(typeof(IDatabaseRepository<>), typeof(DatabaseRepository<>));

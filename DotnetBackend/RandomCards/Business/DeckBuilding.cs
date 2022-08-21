@@ -7,7 +7,7 @@ using AutoMapper;
 
 namespace RandomCards.Business
 {
-    public class Info : IInfo
+    public class DeckBuilding : IDeckBuilding
     {
     }
 }

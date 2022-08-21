@@ -5,12 +5,12 @@ using RandomCards.Business;
 namespace RandomCards.Controllers
 {
     [Route("api")]
-    public class InfoController : Controller
+    public class DeckBuildingController : Controller
     {
-        private IInfo _info;
-        public InfoController(IInfo info)
+        private IDeckBuilding _deckBuilding;
+        public DeckBuildingController(IDeckBuilding deckBuilding)
         {
-            _info = info;
+            _deckBuilding = deckBuilding;
         }
     }
 }
