@@ -2,14 +2,20 @@
 {
     public class Constants
     {
-        enum Locations
+        public enum GameStatus
+        {
+            InProgress,
+            Ended
+        }
+
+        public enum Locations
         {
             Hand,
             Deck,
             Discard
         }
 
-        enum AliasCategories
+        public enum AliasCategories
         {
             Adj,
             Verb,
