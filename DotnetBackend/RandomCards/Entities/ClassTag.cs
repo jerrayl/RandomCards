@@ -2,8 +2,8 @@ namespace RandomCards.Entities
 {
     public class ClassTag : BaseEntity
     {
-        public string ClassId { get; set; }
-        public string TagId { get; set; }
+        public int ClassId { get; set; }
+        public int TagId { get; set; }
         public string Rarity { get; set; }
 
         public virtual Class Class { get; set; }

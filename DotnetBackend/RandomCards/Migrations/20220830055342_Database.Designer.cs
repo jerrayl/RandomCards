@@ -9,7 +9,7 @@ using RandomCards;
 namespace RandomCards.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220821072805_Database")]
+    [Migration("20220830055342_Database")]
     partial class Database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,8 +104,14 @@ namespace RandomCards.Migrations
                     b.Property<int>("DeckId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Identifier")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("SequenceNum")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -167,26 +173,20 @@ namespace RandomCards.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ClassId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ClassId1")
+                    b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Rarity")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TagId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("TagId1")
+                    b.Property<int>("TagId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId1");
+                    b.HasIndex("ClassId");
 
-                    b.HasIndex("TagId1");
+                    b.HasIndex("TagId");
 
                     b.ToTable("ClassTag");
                 });
@@ -202,6 +202,9 @@ namespace RandomCards.Migrations
 
                     b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Identifier")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -445,11 +448,15 @@ namespace RandomCards.Migrations
                 {
                     b.HasOne("RandomCards.Entities.Class", "Class")
                         .WithMany("ClassTags")
-                        .HasForeignKey("ClassId1");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("RandomCards.Entities.Tag", "Tag")
                         .WithMany()
-                        .HasForeignKey("TagId1");
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
 

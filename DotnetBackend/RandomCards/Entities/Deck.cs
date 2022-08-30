@@ -7,6 +7,7 @@ namespace RandomCards.Entities
         public int ClassId { get; set; }
         public int AccountId { get; set; }
         public string Name { get; set; }
+        public string Identifier { get; set; }
 
         public virtual List<Card> Cards { get; set; }
         public virtual Account Account { get; set; }

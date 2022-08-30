@@ -12,5 +12,15 @@ namespace RandomCards.Controllers
         {
             _deckBuilding = deckBuilding;
         }
+
+        [HttpGet]
+        [Route("classes")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ApiExplorerSettings(GroupName = "DeckBuilding")]
+        public IActionResult GetClasses()
+        {
+            return Ok(_deckBuilding.GetClasses());
+        }
     }
 }

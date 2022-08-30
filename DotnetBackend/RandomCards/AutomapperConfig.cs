@@ -1,4 +1,5 @@
-﻿using RandomCards.Models;
+﻿using System.Linq;
+using RandomCards.Models;
 using RandomCards.Entities;
 using AutoMapper;
 
@@ -14,6 +15,7 @@ namespace RandomCards.AutoMapper
         protected AutoMapperProfileConfiguration(string profileName)
         : base(profileName)
         {
+            CreateMap<Class, ClassModel>();
         }
     }
 }

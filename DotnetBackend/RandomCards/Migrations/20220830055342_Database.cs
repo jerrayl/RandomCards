@@ -137,7 +137,8 @@ namespace RandomCards.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ClassId = table.Column<int>(type: "INTEGER", nullable: false),
                     AccountId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Identifier = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -191,27 +192,25 @@ namespace RandomCards.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ClassId = table.Column<string>(type: "TEXT", nullable: true),
-                    TagId = table.Column<string>(type: "TEXT", nullable: true),
-                    Rarity = table.Column<string>(type: "TEXT", nullable: true),
-                    ClassId1 = table.Column<int>(type: "INTEGER", nullable: true),
-                    TagId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                    ClassId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TagId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rarity = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassTag", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClassTag_Class_ClassId1",
-                        column: x => x.ClassId1,
+                        name: "FK_ClassTag_Class_ClassId",
+                        column: x => x.ClassId,
                         principalTable: "Class",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ClassTag_Tags_TagId1",
-                        column: x => x.TagId1,
+                        name: "FK_ClassTag_Tags_TagId",
+                        column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,8 +267,10 @@ namespace RandomCards.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DeckId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Identifier = table.Column<string>(type: "TEXT", nullable: true),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Cost = table.Column<int>(type: "INTEGER", nullable: false)
+                    Cost = table.Column<int>(type: "INTEGER", nullable: false),
+                    SequenceNum = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -395,14 +396,14 @@ namespace RandomCards.Migrations
                 column: "DeckId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassTag_ClassId1",
+                name: "IX_ClassTag_ClassId",
                 table: "ClassTag",
-                column: "ClassId1");
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassTag_TagId1",
+                name: "IX_ClassTag_TagId",
                 table: "ClassTag",
-                column: "TagId1");
+                column: "TagId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deck_AccountId",
