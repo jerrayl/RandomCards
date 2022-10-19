@@ -27,7 +27,13 @@ namespace RandomCards.Database
                 },
                 new Tag(){
                     Name = "cards"
-                }
+                },
+                new Tag(){
+                    Name = Constants.BENEFIT
+                },
+                new Tag(){
+                    Name = Constants.DRAWBACK
+                },
             };
 
             tags.Where(tag => !database.Tags.Any(t => t.Name == tag.Name)).ToList().ForEach(tag => database.Add(tag));
@@ -163,7 +169,7 @@ namespace RandomCards.Database
                 new Modifier(){Name = "Add cards to own deck", Image = "add_cards_self", Value = 2f, Rarity = 2, Description = "Add % random card(s) to your deck.", FlavorText = "These old writings actually contained some pretty useful information."},
                 new Modifier(){Name = "Add cards to opponent's deck", Image = "add_cards_opp", Value = 2.5f, Rarity = 2, Description = "Add % random card(s) to your opponent's deck.", FlavorText = "I threw a rock at them! How was I supposed to know that it was ore?"},
                 new Modifier(){Name = "Copy cards to self", Image = "duplicate_cards_self", Value = 7.5f, Rarity = 2, Description = "Copy % card(s) from your opponent's hand to yours.", FlavorText = "Swiggity Swooty!"},
-                new Modifier(){Name = "Copy cards to opponent", Value = 4f, Rarity = 2, Description = "Copy % card(s) from your hand to your opponent's.", FlavorText = "Hopefully they'll be so confused they won't notice me killing them."}
+                new Modifier(){Name = "Copy cards to opponent", Image = "duplicate_cards_opp", Value = 4f, Rarity = 2, Description = "Copy % card(s) from your hand to your opponent's.", FlavorText = "Hopefully they'll be so confused they won't notice me killing them."}
             };
 
             modifiers.Where(modifier => !database.Modifiers.Any(m => m.Image == modifier.Image)).ToList().ForEach(modifier => database.Add(modifier));
@@ -173,6 +179,60 @@ namespace RandomCards.Database
             // Seed Aliases
 
             // Seed ModifierTags
+
+            var modifierTags = new List<(string, string)>{
+                ("add_health_self", Constants.BENEFIT),
+                ("add_health_opp", Constants.DRAWBACK),
+                ("slash_self", Constants.DRAWBACK),
+                ("slash_opp", Constants.BENEFIT),
+                ("pierce_self", Constants.DRAWBACK),
+                ("pierce_opp", Constants.BENEFIT),
+                ("bash_self", Constants.DRAWBACK),
+                ("bash_opp", Constants.BENEFIT),
+                ("add_mana_self", Constants.BENEFIT),
+                ("add_mana_opp", Constants.DRAWBACK),
+                ("sub_mana_self", Constants.DRAWBACK),
+                ("sub_mana_opp", Constants.BENEFIT),
+                ("add_magicshield_self", Constants.BENEFIT),
+                ("add_magicshield_opp", Constants.DRAWBACK),
+                ("sub_magicshield_self", Constants.DRAWBACK),
+                ("sub_magicshield_opp", Constants.BENEFIT),
+                ("add_maxhealth_self", Constants.BENEFIT),
+                ("add_maxhealth_opp", Constants.DRAWBACK),
+                ("sub_maxhealth_self", Constants.DRAWBACK),
+                ("sub_maxhealth_opp", Constants.BENEFIT),
+                ("add_maxmana_self", Constants.BENEFIT),
+                ("add_maxmana_opp", Constants.DRAWBACK),
+                ("sub_maxmana_self", Constants.DRAWBACK),
+                ("sub_maxmana_opp", Constants.BENEFIT),
+                ("add_armor_self", Constants.BENEFIT),
+                ("add_armor_opp", Constants.DRAWBACK),
+                ("sub_armor_self", Constants.DRAWBACK),
+                ("sub_armor_opp", Constants.BENEFIT),
+                ("burn_self", Constants.DRAWBACK),
+                ("burn_opp", Constants.BENEFIT),
+                ("freeze_self", Constants.DRAWBACK),
+                ("freeze_opp", Constants.BENEFIT),
+                ("electrocute_self", Constants.DRAWBACK),
+                ("electrocute_opp", Constants.BENEFIT),
+                ("draw_cards_self", Constants.BENEFIT),
+                ("draw_cards_opp", Constants.DRAWBACK),
+                ("destroy_cards_self", Constants.DRAWBACK),
+                ("destroy_cards_opp", Constants.BENEFIT),
+                ("add_cards_self", Constants.BENEFIT),
+                ("add_cards_opp", Constants.DRAWBACK),
+                ("duplicate_cards_self", Constants.BENEFIT),
+                ("duplicate_cards_opp", Constants.DRAWBACK)
+            };
+
+            var modifiersDict = database.Modifiers.ToDictionary(c => c.Image, c => c.Id);
+            modifierTags
+                .Select(tuple => new ModifierTag() { ModifierId = modifiersDict[tuple.Item1], TagId = tagDict[tuple.Item2] })
+                .Where(modifierTag => !database.ModifierTags.Any(mt => mt.ModifierId == modifierTag.ModifierId && mt.TagId == modifierTag.TagId))
+                .ToList()
+                .ForEach(modifierTag => database.Add(modifierTag));
+
+            database.SaveChanges();
         }
     }
 }

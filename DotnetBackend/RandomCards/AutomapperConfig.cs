@@ -16,6 +16,11 @@ namespace RandomCards.AutoMapper
         : base(profileName)
         {
             CreateMap<Class, ClassModel>();
+            CreateMap<CardModifier, CardModifierModel>()
+                .ForMember(dest => dest.Name, m => m.MapFrom(src => src.Modifier.Name))
+                .ForMember(dest => dest.Description, m => m.MapFrom(src => src.Modifier.Description))
+                .ForMember(dest => dest.Value, m => m.MapFrom(src => src.Modifier.Value));                
+            CreateMap<Card, CardModel>();
         }
     }
 }

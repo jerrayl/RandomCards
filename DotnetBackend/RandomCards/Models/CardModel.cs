@@ -18,7 +18,6 @@ namespace RandomCards.Models
         public float Effect { get; set; }
         public string Name { get; set; }
         public float Value { get; set; }
-        public float Rarity { get; set; }
         public string Description { get; set; }
     }
 }

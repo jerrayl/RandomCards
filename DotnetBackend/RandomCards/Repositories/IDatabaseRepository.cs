@@ -8,7 +8,10 @@ namespace RandomCards.Repositories
     public interface IDatabaseRepository<T> where T : BaseEntity
     {
         void Add(T entity);
+
         void Update(T entity);
+
+        void Delete(T entity);
 
         IEnumerable<T> Read();
 

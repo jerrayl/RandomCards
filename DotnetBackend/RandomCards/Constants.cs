@@ -24,6 +24,10 @@
             Object
         }
 
+        // Tags
+        public const string BENEFIT = "benefit";
+        public const string DRAWBACK = "drawback";
+        
         // SignalR Responses
         public const string SUCCESS = "SUCCESS";
     }

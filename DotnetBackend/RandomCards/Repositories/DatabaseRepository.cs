@@ -34,6 +34,14 @@ namespace RandomCards.Repositories
             _dbContext.SaveChanges();
         }
 
+        public void Delete(T entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+            _entities.Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
         public IEnumerable<T> Read()
         {
             return _entities.AsEnumerable();
